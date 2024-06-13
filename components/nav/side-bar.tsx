@@ -35,7 +35,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Input } from "@/components/ui/input";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
-import UserProfile from "./user-profile";
+import UserProfile from "../todovex/user-profile";
 import { primaryNavItems } from "@/utils";
 
 export default function SideBar() {
