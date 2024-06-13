@@ -3,7 +3,7 @@ import { Button } from "../ui/button";
 import { Checkbox } from "../ui/checkbox";
 import { Dialog, DialogContent, DialogTrigger } from "../ui/dialog";
 
-export default function Task({ taskName, _id, isCompleted }) {
+export default function Task({ taskName, _id, isCompleted, handleOnChange }) {
   return (
     <div
       key={_id}
@@ -20,6 +20,7 @@ export default function Task({ taskName, _id, isCompleted }) {
                   "data-[state=checked]:bg-gray-300 border-gray-300"
               )}
               checked={isCompleted}
+              onCheckedChange={handleOnChange}
             />
             <DialogTrigger asChild>
               <div className="flex flex-col items-start">
