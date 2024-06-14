@@ -16,6 +16,7 @@ export default function Task({
   handleOnChange: any;
 }) {
   const { taskName } = data;
+
   return (
     <div
       key={data._id}
