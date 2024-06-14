@@ -111,7 +111,7 @@ export const createATodo = mutation({
     } catch (err) {
       console.log("Error occurred during createATodo mutation", err);
 
-      return "";
+      return null;
     }
   },
 });

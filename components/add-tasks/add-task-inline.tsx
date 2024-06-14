@@ -49,22 +49,30 @@ const FormSchema = z.object({
 
 export default function AddTaskInline({
   setShowAddTask,
+  parentTask,
 }: {
   setShowAddTask: Dispatch<SetStateAction<boolean>>;
+  parentTask?: Doc<"todos">;
 }) {
+  const projectId = parentTask?.projectId || "k97fs8npdxzkr39y5vjcp9kq1d6tycm1";
+  const labelId = parentTask?.labelId || "k579xwsz7e2y73rxexkrg2f5j96tzt4f";
+  const priority = parentTask?.priority?.toString() || "1";
+  const parentId = parentTask?._id;
+
   const { toast } = useToast();
   const projects = useQuery(api.projects.getProjects) ?? [];
   const labels = useQuery(api.labels.getLabels) ?? [];
 
   const createATodoMutation = useMutation(api.todos.createATodo);
+  const createASubTodoMutation = useMutation(api.subTodos.createASubTodo);
 
   const defaultValues = {
     taskName: "",
     description: "",
-    priority: "1",
+    priority,
     dueDate: new Date(),
-    projectId: "k97fs8npdxzkr39y5vjcp9kq1d6tycm1" as Id<"projects">,
-    labelId: "k579xwsz7e2y73rxexkrg2f5j96tzt4f" as Id<"labels">,
+    projectId,
+    labelId,
   };
 
   const form = useForm<z.infer<typeof FormSchema>>({
@@ -77,21 +85,42 @@ export default function AddTaskInline({
       data;
 
     if (projectId) {
-      const mutationId = createATodoMutation({
-        taskName,
-        description,
-        priority: parseInt(priority),
-        dueDate: moment(dueDate).valueOf(),
-        projectId: projectId as Id<"projects">,
-        labelId: labelId as Id<"labels">,
-      });
-
-      if (mutationId !== undefined) {
-        toast({
-          title: "🦄 Created a task!",
-          duration: 3000,
+      if (parentId) {
+        //subtodo
+        const mutationId = createASubTodoMutation({
+          parentId,
+          taskName,
+          description,
+          priority: parseInt(priority),
+          dueDate: moment(dueDate).valueOf(),
+          projectId: projectId as Id<"projects">,
+          labelId: labelId as Id<"labels">,
         });
-        form.reset({ ...defaultValues });
+
+        if (mutationId !== undefined) {
+          toast({
+            title: "🦄 Created a task!",
+            duration: 3000,
+          });
+          form.reset({ ...defaultValues });
+        }
+      } else {
+        const mutationId = createATodoMutation({
+          taskName,
+          description,
+          priority: parseInt(priority),
+          dueDate: moment(dueDate).valueOf(),
+          projectId: projectId as Id<"projects">,
+          labelId: labelId as Id<"labels">,
+        });
+
+        if (mutationId !== undefined) {
+          toast({
+            title: "🦄 Created a task!",
+            duration: 3000,
+          });
+          form.reset({ ...defaultValues });
+        }
       }
     }
   }
@@ -184,7 +213,10 @@ export default function AddTaskInline({
               name="priority"
               render={({ field }) => (
                 <FormItem>
-                  <Select onValueChange={field.onChange} defaultValue={"1"}>
+                  <Select
+                    onValueChange={field.onChange}
+                    defaultValue={priority}
+                  >
                     <FormControl>
                       <SelectTrigger>
                         <SelectValue placeholder="Select a Priority" />
@@ -210,7 +242,7 @@ export default function AddTaskInline({
                 <FormItem>
                   <Select
                     onValueChange={field.onChange}
-                    defaultValue={field.value}
+                    defaultValue={labelId || field.value}
                   >
                     <FormControl>
                       <SelectTrigger>
@@ -238,7 +270,7 @@ export default function AddTaskInline({
               <FormItem>
                 <Select
                   onValueChange={field.onChange}
-                  defaultValue={field.value}
+                  defaultValue={projectId || field.value}
                 >
                   <FormControl>
                     <SelectTrigger>
