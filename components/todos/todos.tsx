@@ -5,7 +5,7 @@ import { api } from "@/convex/_generated/api";
 import { Doc } from "@/convex/_generated/dataModel";
 import { useToast } from "../ui/use-toast";
 
-export default function Todos({ items }) {
+export default function Todos({ items }: { items: Array<Doc<"todos">> }) {
   const { toast } = useToast();
 
   const checkATodo = useMutation(api.todos.checkATodo);
@@ -27,6 +27,7 @@ export default function Todos({ items }) {
     <Task
       key={task._id}
       data={task}
+      isCompleted={task.isCompleted}
       handleOnChange={() => handleOnChangeTodo(task)}
     />
   ));
