@@ -1,5 +1,5 @@
 import { Plus } from "lucide-react";
-import React, { useState } from "react";
+import React, { Dispatch, SetStateAction, useState } from "react";
 import AddTaskInline from "./add-task-inline";
 
 export const AddTaskWrapper = () => {
@@ -12,7 +12,11 @@ export const AddTaskWrapper = () => {
   );
 };
 
-export default function AddTaskButton({ onClick }) {
+export default function AddTaskButton({
+  onClick,
+}: {
+  onClick: Dispatch<SetStateAction<any>>;
+}) {
   return (
     <button className="pl-2 flex mt-2 flex-1" onClick={onClick}>
       <div className="flex flex-col items-center justify-center gap-1 text-center">
