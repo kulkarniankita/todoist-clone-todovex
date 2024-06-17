@@ -73,31 +73,40 @@ export const createASubTodo = mutation({
 });
 
 export const completedSubTodos = query({
-  args: {},
-  handler: async (ctx) => {
+  args: {
+    parentId: v.id("todos"),
+  },
+  handler: async (ctx, { parentId }) => {
     const userId = await handleUserId(ctx);
     if (userId) {
-      return await ctx.db
+      const todos = await ctx.db
         .query("subTodos")
         .filter((q) => q.eq(q.field("userId"), userId))
+        .filter((q) => q.eq(q.field("parentId"), parentId))
         .filter((q) => q.eq(q.field("isCompleted"), true))
         .collect();
+
+      return todos;
     }
     return [];
   },
 });
 
 export const inCompleteSubTodos = query({
-  args: {},
-  handler: async (ctx) => {
+  args: {
+    parentId: v.id("todos"),
+  },
+  handler: async (ctx, { parentId }) => {
     const userId = await handleUserId(ctx);
-    if (userId) {
-      return await ctx.db
-        .query("subTodos")
-        .filter((q) => q.eq(q.field("userId"), userId))
-        .filter((q) => q.eq(q.field("isCompleted"), false))
-        .collect();
-    }
-    return [];
+    // if (userId) {
+    const todos = await ctx.db
+      .query("subTodos")
+      .filter((q) => q.eq(q.field("userId"), userId))
+      .filter((q) => q.eq(q.field("parentId"), parentId))
+      .filter((q) => q.eq(q.field("isCompleted"), false))
+      .collect();
+    return todos;
+    // }
+    // return [];
   },
 });

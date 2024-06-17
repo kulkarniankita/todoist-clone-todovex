@@ -1,5 +1,6 @@
 "use client";
 import { AddTaskWrapper } from "@/components/add-tasks/add-task-button";
+import SuggestMissingTasks from "@/components/add-tasks/suggest-tasks";
 import MobileNav from "@/components/nav/mobile-nav";
 import SideBar from "@/components/nav/side-bar";
 import CompletedTodos from "@/components/todos/completed-todos";
@@ -36,9 +37,13 @@ export default function ProjectIdPage() {
       <div className="flex flex-col">
         <MobileNav />
         <main className="flex flex-1 flex-col gap-4 p-4 lg:px-8">
-          <div className="flex items-center justify-between">
+          <div className="flex items-center justify-between flex-wrap gap-2 lg:gap-0">
             <h1 className="text-lg font-semibold md:text-2xl">{projectName}</h1>
+            <div className="flex gap-6 lg:gap-12 items-center">
+              <SuggestMissingTasks projectId={projectId} />
+            </div>
           </div>
+
           <Todos items={inCompletedTodosByProject} />
 
           <div className="pb-6">

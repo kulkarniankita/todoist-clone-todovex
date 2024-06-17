@@ -23,10 +23,10 @@ export default function AddTaskDialog({ data }: { data: Doc<"todos"> }) {
   const label = useQuery(api.labels.getLabelByLabelId, { labelId });
 
   const inCompletedSubtodosByProject =
-    useQuery(api.subTodos.inCompleteSubTodos) ?? [];
+    useQuery(api.subTodos.inCompleteSubTodos, { parentId: _id }) ?? [];
 
   const completedSubtodosByProject =
-    useQuery(api.subTodos.completedSubTodos) ?? [];
+    useQuery(api.subTodos.completedSubTodos, { parentId: _id }) ?? [];
 
   const checkASubTodoMutation = useMutation(api.subTodos.checkASubTodo);
   const unCheckASubTodoMutation = useMutation(api.subTodos.unCheckASubTodo);
