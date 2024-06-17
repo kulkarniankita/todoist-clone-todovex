@@ -35,12 +35,13 @@ import {
 import { Doc, Id } from "@/convex/_generated/dataModel";
 import { useAction, useMutation, useQuery } from "convex/react";
 import { api } from "@/convex/_generated/api";
+import { GET_STARTED_PROJECT_ID } from "@/utils";
 
 const FormSchema = z.object({
   taskName: z.string().min(2, {
     message: "Task name must be at least 2 characters.",
   }),
-  description: z.string().optional(),
+  description: z.string().optional().default(""),
   dueDate: z.date({ required_error: "A due date is required" }),
   priority: z.string().min(1, { message: "Please select a priority" }),
   projectId: z.string().min(1, { message: "Please select a Project" }),
@@ -50,12 +51,19 @@ const FormSchema = z.object({
 export default function AddTaskInline({
   setShowAddTask,
   parentTask,
+  projectId: myProjectId,
 }: {
   setShowAddTask: Dispatch<SetStateAction<boolean>>;
   parentTask?: Doc<"todos">;
+  projectId?: Id<"projects">;
 }) {
-  const projectId = parentTask?.projectId || "k97fs8npdxzkr39y5vjcp9kq1d6tycm1";
-  const labelId = parentTask?.labelId || "k579xwsz7e2y73rxexkrg2f5j96tzt4f";
+  const projectId =
+    myProjectId ||
+    parentTask?.projectId ||
+    (GET_STARTED_PROJECT_ID as Id<"projects">);
+
+  const labelId =
+    parentTask?.labelId || ("k579xwsz7e2y73rxexkrg2f5j96tzt4f" as Id<"labels">);
   const priority = parentTask?.priority?.toString() || "1";
   const parentId = parentTask?._id;
 
@@ -129,7 +137,6 @@ export default function AddTaskInline({
   }
   return (
     <div>
-      {JSON.stringify(form.getValues(), null, 2)}
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(onSubmit)}
@@ -164,7 +171,6 @@ export default function AddTaskInline({
                     <Textarea
                       id="description"
                       placeholder="Description"
-                      required
                       className="resize-none"
                       {...field}
                     />

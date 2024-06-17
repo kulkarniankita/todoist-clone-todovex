@@ -168,3 +168,26 @@ export const inCompleteSubTodos = query({
     // return [];
   },
 });
+
+export const deleteASubTodo = mutation({
+  args: {
+    taskId: v.id("subTodos"),
+  },
+  handler: async (ctx, { taskId }) => {
+    try {
+      const userId = await handleUserId(ctx);
+      if (userId) {
+        const deletedTaskId = await ctx.db.delete(taskId);
+        //query todos and map through them and delete
+
+        return deletedTaskId;
+      }
+
+      return null;
+    } catch (err) {
+      console.log("Error occurred during deleteASubTodo mutation", err);
+
+      return null;
+    }
+  },
+});

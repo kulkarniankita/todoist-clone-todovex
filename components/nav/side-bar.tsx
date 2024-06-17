@@ -19,6 +19,7 @@ import { useEffect, useState } from "react";
 import { Hash, PlusIcon } from "lucide-react";
 import { Doc } from "@/convex/_generated/dataModel";
 import { Dialog, DialogContent, DialogTrigger } from "../ui/dialog";
+import AddProjectDialog from "../projects/add-project-dialog";
 
 interface MyListTitleType {
   [key: string]: string;
@@ -69,15 +70,7 @@ export default function SideBar() {
                     {LIST_OF_TITLE_IDS[id]}
                   </p>
                   {LIST_OF_TITLE_IDS[id] === "My Projects" && (
-                    <Dialog>
-                      <DialogTrigger id="closeDialog">
-                        <PlusIcon
-                          className="h-5 w-5"
-                          aria-label="Add a Project"
-                        />
-                      </DialogTrigger>
-                      <DialogContent>hiii</DialogContent>
-                    </Dialog>
+                    <AddProjectDialog />
                   )}
                 </div>
               )}

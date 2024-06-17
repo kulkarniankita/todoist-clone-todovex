@@ -286,3 +286,26 @@ export const groupTodosByDate = query({
     return [];
   },
 });
+
+export const deleteATodo = mutation({
+  args: {
+    taskId: v.id("todos"),
+  },
+  handler: async (ctx, { taskId }) => {
+    try {
+      const userId = await handleUserId(ctx);
+      if (userId) {
+        const deletedTaskId = await ctx.db.delete(taskId);
+        //query todos and map through them and delete
+
+        return deletedTaskId;
+      }
+
+      return null;
+    } catch (err) {
+      console.log("Error occurred during deleteATodo mutation", err);
+
+      return null;
+    }
+  },
+});

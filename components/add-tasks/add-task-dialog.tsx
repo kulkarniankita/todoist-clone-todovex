@@ -8,7 +8,7 @@ import {
 } from "../ui/dialog";
 import { Button } from "../ui/button";
 import { Label } from "../ui/label";
-import { Calendar, ChevronDown, Flag, Hash, Tag } from "lucide-react";
+import { Calendar, ChevronDown, Flag, Hash, Tag, Trash2 } from "lucide-react";
 import { format } from "date-fns";
 import { useMutation, useQuery } from "convex/react";
 import { api } from "@/convex/_generated/api";
@@ -16,12 +16,16 @@ import { useEffect, useState } from "react";
 import Task from "../todos/task";
 import { AddTaskWrapper } from "./add-task-button";
 import SuggestMissingTasks from "./suggest-tasks";
+import { deleteATodo } from "@/convex/todos";
+import { useToast } from "../ui/use-toast";
 
 export default function AddTaskDialog({ data }: { data: Doc<"todos"> }) {
   const { taskName, description, projectId, labelId, priority, dueDate, _id } =
     data;
   const project = useQuery(api.projects.getProjectByProjectId, { projectId });
   const label = useQuery(api.labels.getLabelByLabelId, { labelId });
+
+  const { toast } = useToast();
 
   const inCompletedSubtodosByProject =
     useQuery(api.subTodos.inCompleteSubTodos, { parentId: _id }) ?? [];
@@ -32,7 +36,7 @@ export default function AddTaskDialog({ data }: { data: Doc<"todos"> }) {
   const checkASubTodoMutation = useMutation(api.subTodos.checkASubTodo);
   const unCheckASubTodoMutation = useMutation(api.subTodos.unCheckASubTodo);
 
-  console.log({ project });
+  const deleteATodoMutation = useMutation(api.todos.deleteATodo);
 
   const [todoDetails, setTodoDetails] = useState<
     Array<{ labelName: string; value: string; icon: React.ReactNode }>
@@ -65,6 +69,17 @@ export default function AddTaskDialog({ data }: { data: Doc<"todos"> }) {
       setTodoDetails(data);
     }
   }, [dueDate, label?.name, priority, project]);
+
+  const handleDeleteTodo = (e: any) => {
+    e.preventDefault();
+    const deletedId = deleteATodoMutation({ taskId: _id });
+    if (deletedId !== undefined) {
+      toast({
+        title: "🗑️ Successfully deleted",
+        duration: 3000,
+      });
+    }
+  };
 
   return (
     <DialogContent className="max-w-4xl lg:h-4/6 flex flex-col md:flex-row lg:justify-between text-right">
@@ -131,6 +146,13 @@ export default function AddTaskDialog({ data }: { data: Doc<"todos"> }) {
             </div>
           </div>
         ))}
+        <div className="flex gap-2 p-4 w-full justify-end">
+          <form onSubmit={(e) => handleDeleteTodo(e)}>
+            <button type="submit">
+              <Trash2 className="w-5 h-5" />
+            </button>
+          </form>
+        </div>
       </div>
     </DialogContent>
   );
