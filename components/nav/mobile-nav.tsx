@@ -18,7 +18,13 @@ import UserProfile from "./user-profile";
 
 import todovexLogo from "@/public/logo/todovex.svg";
 
-export default function MobileNav() {
+export default function MobileNav({
+  navTitle = "",
+  navLink = "#",
+}: {
+  navTitle?: string;
+  navLink?: string;
+}) {
   return (
     <header className="flex h-14 items-center gap-4 border-b bg-muted/40 px-4 lg:h-[60px] lg:px-6">
       <Sheet>
@@ -73,9 +79,9 @@ export default function MobileNav() {
       </Sheet>
       <div className="flex items-center md:justify-between w-full gap-1 md:gap-2 py-2">
         <div className="lg:flex-1">
-          <Link href="/loggedin/projects">
+          <Link href={navLink}>
             <p className="text-sm font-semibold text-foreground/70 w-24">
-              / My Projects
+              {navTitle}
             </p>
           </Link>
         </div>

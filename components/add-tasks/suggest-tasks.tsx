@@ -16,7 +16,7 @@ export default function SuggestMissingTasks({
   isSubTask?: boolean;
   taskName?: string;
   description?: string;
-  parentId: Id<"todos">;
+  parentId?: Id<"todos">;
 }) {
   const [isLoadingSuggestMissingTasks, setIsLoadingSuggestMissingTasks] =
     useState(false);
@@ -41,12 +41,14 @@ export default function SuggestMissingTasks({
   const handleMissingSubTasks = async () => {
     setIsLoadingSuggestMissingTasks(true);
     try {
-      await suggestMissingSubTasks({
-        projectId,
-        taskName,
-        description,
-        parentId,
-      });
+      if (parentId) {
+        await suggestMissingSubTasks({
+          projectId,
+          taskName,
+          description,
+          parentId,
+        });
+      }
     } catch (error) {
       console.log("Error in suggestMissingSubTasks", error);
     } finally {
