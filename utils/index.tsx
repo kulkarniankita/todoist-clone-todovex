@@ -2,6 +2,7 @@ import { Calendar, CalendarDays, Grid2X2, Inbox } from "lucide-react";
 
 export const primaryNavItems = [
   {
+    id: "primary",
     name: "Inbox",
     link: "/loggedin",
     icon: <Inbox className="w-4 h-4" />,
