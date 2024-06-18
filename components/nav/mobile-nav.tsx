@@ -1,4 +1,4 @@
-import { Menu, PlusIcon } from "lucide-react";
+import { Menu } from "lucide-react";
 import Link from "next/link";
 
 import { Button } from "@/components/ui/button";
@@ -12,12 +12,10 @@ import {
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { primaryNavItems } from "@/utils";
 import Image from "next/image";
-import { Dialog, DialogContent, DialogTrigger } from "../ui/dialog";
 import SearchForm from "./search-form";
 import UserProfile from "./user-profile";
 
 import todovexLogo from "@/public/logo/todovex.svg";
-import AddProjectDialog from "../projects/add-project-dialog";
 
 export default function MobileNav({
   navTitle = "",

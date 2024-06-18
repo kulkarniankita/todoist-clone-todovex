@@ -1,21 +1,23 @@
+import { Doc } from "@/convex/_generated/dataModel";
 import clsx from "clsx";
-import { Button } from "../ui/button";
-import { Checkbox } from "../ui/checkbox";
-import { Dialog, DialogContent, DialogTrigger } from "../ui/dialog";
-import { Doc, Id } from "@/convex/_generated/dataModel";
-import { ChangeEvent } from "react";
 import AddTaskDialog from "../add-tasks/add-task-dialog";
+import { Checkbox } from "../ui/checkbox";
+import { Dialog, DialogTrigger } from "../ui/dialog";
+import { Calendar, GitBranch, Tag } from "lucide-react";
+import moment from "moment";
 
 export default function Task({
   data,
   isCompleted,
   handleOnChange,
+  showDetails = false,
 }: {
   data: Doc<"todos"> | Doc<"subTodos">;
   isCompleted: boolean;
   handleOnChange: any;
+  showDetails?: boolean;
 }) {
-  const { taskName } = data;
+  const { taskName, dueDate } = data;
 
   return (
     <div
@@ -45,7 +47,20 @@ export default function Task({
                 >
                   {taskName}
                 </button>
-                <div></div>
+                {showDetails && (
+                  <div className="flex gap-2">
+                    <div className="flex items-center justify-center gap-1">
+                      <GitBranch className="w-3 h-3 text-foreground/70" />
+                      <p className="text-xs text-foreground/70"></p>
+                    </div>
+                    <div className="flex items-center justify-center gap-1">
+                      <Calendar className="w-3 h-3 text-primary" />
+                      <p className="text-xs text-primary">
+                        {moment(dueDate).format("LL")}
+                      </p>
+                    </div>
+                  </div>
+                )}
               </div>
             </DialogTrigger>
           </div>

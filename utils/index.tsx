@@ -18,6 +18,7 @@ export const primaryNavItems = [
     icon: <CalendarDays className="w-4 h-4" />,
   },
   {
+    id: "filters",
     name: "Filters & Labels",
     link: "/loggedin/filter-labels",
     icon: <Grid2X2 className="w-4 h-4" />,

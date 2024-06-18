@@ -37,3 +37,28 @@ export const getLabelByLabelId = query({
     return null;
   },
 });
+
+export const createALabel = mutation({
+  args: {
+    name: v.string(),
+  },
+  handler: async (ctx, { name }) => {
+    try {
+      const userId = await handleUserId(ctx);
+      if (userId) {
+        const newTaskId = await ctx.db.insert("labels", {
+          userId,
+          name,
+          type: "user",
+        });
+        return newTaskId;
+      }
+
+      return null;
+    } catch (err) {
+      console.log("Error occurred during createALabel mutation", err);
+
+      return null;
+    }
+  },
+});
