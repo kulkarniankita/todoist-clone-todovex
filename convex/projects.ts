@@ -2,6 +2,7 @@ import { query, mutation, action } from "./_generated/server";
 import { v } from "convex/values";
 import { handleUserId } from "./auth";
 import { api } from "./_generated/api";
+import { Doc } from "./_generated/dataModel";
 
 export const getProjects = query({
   args: {},
@@ -95,35 +96,24 @@ export const deleteProjectAndItsTasks = action({
   },
   handler: async (ctx, { projectId }) => {
     try {
-      const todos = await ctx.runQuery(api.todos.getTodosByProjectId, {
+      const allTasks = await ctx.runQuery(api.todos.getTodosByProjectId, {
         projectId,
       });
-      todos.map(async (todo) => {
-        console.log({ todo });
 
-        const parentId = todo._id;
-        const subTodos = await ctx.runQuery(
-          api.subTodos.getSubTodosByParentId,
-          {
-            parentId,
-          }
-        );
-        console.log({ subTodos });
+      const promises = Promise.allSettled(
+        allTasks.map(async (task: Doc<"todos">) =>
+          ctx.runMutation(api.todos.deleteATodo, {
+            taskId: task._id,
+          })
+        )
+      );
+      const statuses = await promises;
 
-        subTodos.map(async (todo) => {
-          const id = todo._id;
-          await ctx.runMutation(api.subTodos.deleteASubTodo, {
-            taskId: id,
-          });
-        });
-        await ctx.runMutation(api.todos.deleteATodo, {
-          taskId: parentId,
-        });
+      await ctx.runMutation(api.projects.deleteProject, {
+        projectId,
       });
-
-      await ctx.runMutation(api.projects.deleteProject, { projectId });
     } catch (err) {
-      console.error("Error while deleting projects and its tasks", err);
+      console.error("Error deleting tasks and projects", err);
     }
   },
 });
