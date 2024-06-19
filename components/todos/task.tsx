@@ -6,6 +6,12 @@ import { Dialog, DialogTrigger } from "../ui/dialog";
 import { Calendar, GitBranch, Tag } from "lucide-react";
 import moment from "moment";
 
+function isSubTodo(
+  data: Doc<"todos"> | Doc<"subTodos">
+): data is Doc<"subTodos"> {
+  return "parentId" in data;
+}
+
 export default function Task({
   data,
   isCompleted,
@@ -64,7 +70,7 @@ export default function Task({
               </div>
             </DialogTrigger>
           </div>
-          {!data?.parentId && <AddTaskDialog data={data} />}
+          {!isSubTodo(data) && <AddTaskDialog data={data} />}
         </div>
       </Dialog>
     </div>

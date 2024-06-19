@@ -1,5 +1,5 @@
 import { defineSchema, defineTable } from "convex/server";
-import { v } from "convex/values";
+import { v, Validator } from "convex/values";
 
 // The users, accounts, sessions and verificationTokens tables are modeled
 // from https://authjs.dev/getting-started/adapters#models

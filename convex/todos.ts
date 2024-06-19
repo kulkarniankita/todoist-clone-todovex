@@ -89,7 +89,7 @@ export const getTodosTotalByProjectId = query({
 
       return todos?.length || 0;
     }
-    return [];
+    return 0;
   },
 });
 
