@@ -26,9 +26,10 @@ export default function ProjectIdPage() {
   const project = useQuery(api.projects.getProjectByProjectId, {
     projectId,
   });
-  const projectTodosTotal = useQuery(api.todos.getTodosTotalByProjectId, {
-    projectId,
-  });
+  const projectTodosTotal =
+    useQuery(api.todos.getTodosTotalByProjectId, {
+      projectId,
+    }) || 0;
 
   const projectName = project?.name || "";
 
