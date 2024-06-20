@@ -32,13 +32,18 @@ Built with the Next.js 14 App Router, Convex, React, Next.js Auth V5 i.e. Auth.j
 
 ## Getting started
 
-To get started with this project, run
+To get started with this project, you need to do the following,
+1. Please fork the repo
+2. Copy the .env.example variables into a separate .env.local file
+3. Create the credentials mentioned in the Youtube tutorial to get started!
 
-```bash
-  git clone git@github.com:kulkarniankita/todoist-clone-todovex.git
-```
+## 1. How to fork and clone
+- If you want to make changes and contribute to this project, you'll need to create a fork first.  Forking creates a copy of the original project in your own GitHub account. This lets you experiment with edits without affecting the main project.
 
-and copy the .env.example variables into a separate .env file, and create the credentials to get started!
+- Look for the "Fork" button in the top right corner of the project on GitHub. Clicking it will create a copy under your account with the same name.
+![image](https://github.com/kulkarniankita/todoist-clone-todovex/assets/2559673/f10c45ab-e2aa-4334-b32a-dcaa2873241a)
+
+- After forking the project, you can clone it just like you usually do.
 
 
 ## Acknowledgements
