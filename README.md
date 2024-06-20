@@ -1,36 +1,50 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Todovex - An Open Source AI-Powered Todoist Clone
 
-## Getting Started
 
-First, run the development server:
+Built with the Next.js 14 App Router, Convex, React, Next.js Auth V5 i.e. Auth.js, Google Sign in, ShadCN UI library, React Hook Forms, TypeScript, OPenAI, TailwindCSS and more
+
+
+![Project Image](https://www.todovex.ai/og-image.png)
+
+## Features
+- 🌐 Next.js & Server actions
+- 🤖 AI Suggest Missing Tasks and Sub-Tasks using Open AI
+- 🎨 Beautiful components using Shadcn UI
+- 💅 Slick designs using TailwindCSS
+- 🌟 Database using Convex
+- 🎭 Amazing icons thanks to Lucide React
+- 🔐 Auth using Next Auth aka Auth.js
+- 📋 Typescript Runtime Validation using Zod
+- 🚀 Form Validation using React Hook Forms
+- ❤️ Add Task Dialog popup
+- 💔 Deletion of Tasks Dialog popup
+- ✚ Addition of Sub-Tasks
+- 💔 Deletion of Sub-Tasks Dialog popup
+- 📜 Creation of New Projects and Labels
+- 📜 Deletion of New Projects and Labels
+- 🔄 Sidebar Navigation
+- 🏆 Vector Search your Tasks
+ - 📱Full mobile responsiveness 
+- 🛬 Landing page 🛬
+- 🚀 Deployment on Vercel
+- 📱 Mobile responsiveness
+- 🎁 ...much more
+
+## Getting started
+
+To get started with this project, run
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+  git clone git@github.com:kulkarniankita/todoist-clone-todovex.git
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+and copy the .env.example variables into a separate .env file, and create the credentials to get started!
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+## Acknowledgements
 
-## Learn More
+- [Convex](https://convex.dev/c/todovex) for making this project possible
 
-To learn more about Next.js, take a look at the following resources:
+## License
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+[MIT](https://choosealicense.com/licenses/mit/)
